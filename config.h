@@ -54,10 +54,17 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+/* defining custom keybindings for thinkpad keyboard */
+/*#define PrintScreenDWM  0xff61 */ /* commented as I can just use XK_Print */
+#define ScreenLockDWM   0xff14
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+/* custom commands; make sure these exist in $PATH and your user has right permissions (chmod) */
+static const char *cmdprintscreen[]    = { "scrot", "/home/skarm/pictures/screenshots/%Y-%m-%d-%T-screenshot.jpg", NULL };
+static const char *cmdlockscreen[]     = { "slock", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -94,6 +101,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+  { 0,                            XK_Print, spawn,           {.v = cmdprintscreen } },
+  { 0,                            ScreenLockDWM,spawn,       {.v = cmdlockscreen  } },
 };
 
 /* button definitions */
